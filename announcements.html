@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js..js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="logo.jpeg" alt="University Logo" class="logo">
+            <h1>King Saud University</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="admissions.html">Admission</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <ul>
+            
+            <li><a href="announcements.html">Announcements</a></li>
+            <li><a href="grades.html">Grades</a></li>
+            <li><a href="signin.html">Sign In</a></li>
+        </ul>
+    </div>
+    <main>
+        <section class="announcement-form-section">
+            <h2>Post a New Announcement</h2>
+            <form id="announcementForm">
+                <label for="announcementTitle">Title:</label>
+                <input type="text" id="announcementTitle" name="title" required>
+                <label for="announcementContent">Content:</label>
+                <textarea id="announcementContent" name="content" required></textarea>
+                <button type="submit">Post Announcement</button>
+            </form>
+        </section>
+        <section class="announcements-list-section">
+            <h2>Latest Announcements</h2>
+            <div id="announcementsList">
+                <!-- Announcements will be displayed here -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.getElementById('announcementForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const title = document.getElementById('announcementTitle').value;
+            const content = document.getElementById('announcementContent').value;
+
+            const announcement = document.createElement('div');
+            announcement.classList.add('announcement');
+            announcement.innerHTML = `<h3>${title}</h3><p>${content}</p><button onclick="editAnnouncement(this)">Edit</button> <button onclick="deleteAnnouncement(this)">Delete</button>`;
+
+            document.getElementById('announcementsList').appendChild(announcement);
+
+            // Clear the form
+            document.getElementById('announcementForm').reset();
+        });
+
+        function editAnnouncement(button) {
+            const announcement = button.parentNode;
+            const title = announcement.querySelector('h3').textContent;
+            const content = announcement.querySelector('p').textContent;
+
+            const newTitle = prompt('Edit Title:', title);
+            const newContent = prompt('Edit Content:', content);
+
+            if (newTitle !== null) announcement.querySelector('h3').textContent = newTitle;
+            if (newContent !== null) announcement.querySelector('p').textContent = newContent;
+        }
+
+        function deleteAnnouncement(button) {
+            const announcement = button.parentNode;
+            announcement.parentNode.removeChild(announcement);
+        }
+    </script>
+</body>
+</html>

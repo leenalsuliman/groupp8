@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js..js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="logo.jpeg" alt="University Logo" class="logo">
+            <h1>King Saud University</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="admissions.html">Admission</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <ul>
+            
+            <li><a href="announcements.html">Announcements</a></li>
+            <li><a href="grades.html">Grades</a></li>
+            <li><a href="signin.html">Sign In</a></li>
+        </ul>
+    </div>
+    <main>
+        <section class="grade-form-section">
+            <h2>Submit Grades</h2>
+            <form id="gradeForm">
+                <label for="studentName">Student Name:</label>
+                <input type="text" id="studentName" name="studentName" required>
+                <label for="studentGrade">Grade:</label>
+                <input type="text" id="studentGrade" name="studentGrade" required>
+                <button type="submit">Submit Grade</button>
+            </form>
+        </section>
+        <section class="grades-list-section">
+            <h2>Grades List</h2>
+            <table id="gradesTable">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Grade</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Grades will be displayed here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.getElementById('gradeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const studentName = document.getElementById('studentName').value;
+            const studentGrade = document.getElementById('studentGrade').value;
+
+            const table = document.getElementById('gradesTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const nameCell = newRow.insertCell(0);
+            const gradeCell = newRow.insertCell(1);
+            const actionsCell = newRow.insertCell(2);
+
+            nameCell.textContent = studentName;
+            gradeCell.textContent = studentGrade;
+            actionsCell.innerHTML = '<button onclick="editGrade(this)">Edit</button> <button onclick="deleteGrade(this)">Delete</button>';
+
+            // Clear the form
+            document.getElementById('gradeForm').reset();
+        });
+
+        function editGrade(button) {
+            const row = button.parentNode.parentNode;
+            const nameCell = row.cells[0];
+            const gradeCell = row.cells[1];
+
+            const newName = prompt('Edit Student Name:', nameCell.textContent);
+            const newGrade = prompt('Edit Grade:', gradeCell.textContent);
+
+            if (newName !== null) nameCell.textContent = newName;
+            if (newGrade !== null) gradeCell.textContent = newGrade;
+        }
+
+        function deleteGrade(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+</html>
